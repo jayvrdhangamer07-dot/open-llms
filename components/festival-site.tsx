@@ -39,7 +39,7 @@ function SectionHeading({ eyebrow, title, copy, light = false }: { eyebrow: stri
   return <div className={`section-heading ${light ? 'section-heading-light' : ''}`}><span className="eyebrow">{eyebrow}</span><h2>{title}</h2>{copy && <p>{copy}</p>}</div>
 }
 
-function Logo() { return <Link href="#home" className="brand" aria-label="New Panchsheel Ke Raja home"><span className="brand-mark">ॐ</span><span><strong>NEW PANCHSHEEL</strong><small>KE RAJA · GANESH MANDAL</small></span></Link> }
+function Logo() { return <Link href="#home" className="brand" aria-label="New Panchsheel Ke Raja home"><img src="/logo.png" alt="New Panchsheel Ke Raja logo" className="brand-logo"/><span><strong>NEW PANCHSHEEL</strong><small>KE RAJA · GANESH MANDAL</small></span></Link> }
 
 export default function FestivalSite() {
   const [menuOpen, setMenuOpen] = useState(false)
