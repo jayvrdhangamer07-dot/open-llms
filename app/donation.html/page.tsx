@@ -24,14 +24,64 @@ export default function DonationPage() {
   }
 
   const downloadReceipt = () => {
-    const receipt = `NEW PANCHSHEEL KE RAJA\nDonation Receipt\n\nDonor: ${name}\nAmount: ₹${amount}\nDate: ${new Date().toLocaleDateString('en-IN')}\n\nThank you for supporting our seva.`
-    const blob = new Blob([receipt], { type: 'text/plain' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = 'new-panchsheel-ke-raja-receipt.txt'
-    link.click()
-    URL.revokeObjectURL(url)
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    if (!context) return
+
+    const width = 1200
+    const height = 760
+    const date = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+    canvas.width = width
+    canvas.height = height
+
+    context.fillStyle = '#fbf9f5'
+    context.fillRect(0, 0, width, height)
+    context.strokeStyle = '#702d2c'
+    context.lineWidth = 10
+    context.strokeRect(24, 24, width - 48, height - 48)
+    context.fillStyle = '#702d2c'
+    context.fillRect(24, 24, width - 48, 12)
+    context.fillRect(24, height - 36, width - 48, 12)
+
+    const logo = new Image()
+    logo.crossOrigin = 'anonymous'
+    logo.onload = () => {
+      context.drawImage(logo, 86, 86, 132, 132)
+      context.textAlign = 'left'
+      context.fillStyle = '#702d2c'
+      context.font = '700 42px Arial'
+      context.fillText('NEW PANCHSHEEL KE RAJA', 260, 135)
+      context.fillStyle = '#736b64'
+      context.font = '22px Arial'
+      context.fillText('GANESH MANDAL · SEVA RECEIPT', 264, 177)
+      context.strokeStyle = '#dfd5c7'
+      context.lineWidth = 2
+      context.beginPath()
+      context.moveTo(86, 270)
+      context.lineTo(1114, 270)
+      context.stroke()
+      context.fillStyle = '#736b64'
+      context.font = '22px Arial'
+      context.fillText('DONATOR NAME', 100, 345)
+      context.fillText('DATE', 100, 445)
+      context.fillText('MONEY PAID', 100, 545)
+      context.fillStyle = '#2c241f'
+      context.font = '600 34px Arial'
+      context.fillText(name.trim(), 100, 390)
+      context.fillText(date, 100, 490)
+      context.fillStyle = '#702d2c'
+      context.font = '700 46px Arial'
+      context.fillText(`₹${Number(amount).toLocaleString('en-IN')}`, 100, 595)
+      context.textAlign = 'right'
+      context.fillStyle = '#736b64'
+      context.font = '20px Arial'
+      context.fillText('Thank you for supporting our seva.', 1100, 665)
+      const link = document.createElement('a')
+      link.download = 'new-panchsheel-ke-raja-receipt.png'
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    }
+    logo.src = '/logo.png'
   }
 
   return (
@@ -52,7 +102,7 @@ export default function DonationPage() {
         <div className="donation-card">
           <div className="donation-card-head"><div><span className="eyebrow">NEW PANCHSHEEL KE RAJA</span><h2>Make an offering</h2></div><ShieldCheck size={25} /></div>
           {submitted ? (
-            <div className="receipt-success"><div className="success-icon"><Check /></div><h3>Thank you, {name || 'Bappa devotee'}.</h3><p>Your generous offering of <b>₹{amount}</b> is a beautiful part of our celebration.</p><button className="button button-dark" onClick={downloadReceipt}><Download size={16} /> Download Receipt</button><button className="start-over" onClick={() => setSubmitted(false)}>Make another offering</button></div>
+            <div className="receipt-success"><div className="success-icon"><Check /></div><h3>Thank you, {name || 'Bappa devotee'}.</h3><p>Your generous offering of <b>₹{amount}</b> is a beautiful part of our celebration.</p><button className="button button-dark" onClick={downloadReceipt}><Download size={16} /> Download Receipt Image</button><button className="start-over" onClick={() => setSubmitted(false)}>Make another offering</button></div>
           ) : (
             <>
               <div className="upi-payment"><div className="upi-payment-copy"><span className="eyebrow">PAY WITH UPI</span><h3>Scan to offer seva</h3><p>Use Google Pay, PhonePe or Paytm to scan this QR code.</p></div><img src={QR_CODE_URL} alt="UPI QR code for New Panchsheel Ke Raja donations" className="upi-qr" /></div>
