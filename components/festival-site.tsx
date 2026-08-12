@@ -33,7 +33,7 @@ const gallery = [
   ['Ganeshotsav', photos.hero, 'The arrival of Bappa'], ['Aarti', photos.aarti, 'Evening aarti'], ['Decoration', photos.decoration, 'A celebration in detail'], ['Events', photos.crowd, 'Together in devotion'], ['Visarjan', 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=82', 'Until next year'], ['Celebrations', photos.festival, 'Community celebration'],
 ]
 const seva = [['Blood Donation', 'Give the gift of life', 'HeartPulse'], ['Food Distribution', 'A warm meal for every neighbour', 'HandHeart'], ['Educational Support', 'Building brighter beginnings', 'BookOpen'], ['Medical Camps', 'Care that reaches everyone', 'Plus'], ['Community Service', 'Small acts, lasting impact', 'Users'], ['Environmental Initiatives', 'A cleaner tomorrow for all', 'Leaf']]
-const committee = [['Jatin Sanotiya', 'President', 'JS'], ['Raha', 'Vice President', 'R'], ['Devendra Parmar', 'Secretary', 'DP'], ['Jayvardhan', 'Treasurer', 'J']]
+const committee = [['Jatin Sanotiya', 'President', 'JS'], ['Raja', 'Vice President', 'R'], ['Devendra Parmar', 'Vice President', 'DP'], ['Jayvardhan', 'Editor, Website Designer', 'J']]
 
 function SectionHeading({ eyebrow, title, copy, light = false }: { eyebrow: string; title: string; copy?: string; light?: boolean }) {
   return <div className={`section-heading ${light ? 'section-heading-light' : ''}`}><span className="eyebrow">{eyebrow}</span><h2>{title}</h2>{copy && <p>{copy}</p>}</div>
