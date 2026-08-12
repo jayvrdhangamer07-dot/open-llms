@@ -44,8 +44,13 @@ export default function DonationPage() {
     context.fillRect(24, height - 36, width - 48, 12)
 
     const logo = new Image()
+    const signature = new Image()
     logo.crossOrigin = 'anonymous'
-    logo.onload = () => {
+    signature.crossOrigin = 'anonymous'
+    let logoLoaded = false
+    let signatureLoaded = false
+    const renderReceipt = () => {
+      if (!logoLoaded || !signatureLoaded) return
       context.drawImage(logo, 86, 86, 132, 132)
       context.textAlign = 'left'
       context.fillStyle = '#702d2c'
@@ -76,12 +81,20 @@ export default function DonationPage() {
       context.fillStyle = '#736b64'
       context.font = '20px Arial'
       context.fillText('Thank you for supporting our seva.', 1100, 665)
+      context.textAlign = 'center'
+      context.fillStyle = '#736b64'
+      context.font = '18px Arial'
+      context.fillText('Authorized signature', 940, 610)
+      context.drawImage(signature, 790, 490, 300, 105)
       const link = document.createElement('a')
       link.download = 'new-panchsheel-ke-raja-receipt.png'
       link.href = canvas.toDataURL('image/png')
       link.click()
     }
+    logo.onload = () => { logoLoaded = true; renderReceipt() }
+    signature.onload = () => { signatureLoaded = true; renderReceipt() }
     logo.src = '/logo.png'
+    signature.src = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/file_00000000ff2082119733c7af31e0ae94-oJ0vdHc8QGo3uvrDtB1gqpQf0qVF36.png'
   }
 
   return (
